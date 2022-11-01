@@ -1,0 +1,21 @@
+.question {
+    display: flex;
+}
+
+.status {
+    width: 1em;
+    height: 1em;
+    border: 1px solid black;
+}
+
+.correct {
+    background-color: green;
+}
+
+.incorrect {
+    background-color: red;
+}
+
+.partially-correct {
+    background-color: yellow;
+}
