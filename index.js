@@ -103,7 +103,13 @@ function createCategory(categoryName, questions) {
     h2Element.textContent = categoryName;
     categoryElement.append(h2Element);
 
+    let correctAnswersQty = 0;
+
     questions.forEach((question) => {
+        if (question.status === 'correct') {
+            correctAnswersQty += 1;
+        }
+
         const questionElement = document.createElement('div');
         questionElement.classList.add('question');
         
@@ -118,6 +124,8 @@ function createCategory(categoryName, questions) {
 
         categoryElement.append(questionElement);
     });
+
+    h2Element.textContent += ` - ${correctAnswersQty} / ${questions.length}`;
 
     return categoryElement;
 }
