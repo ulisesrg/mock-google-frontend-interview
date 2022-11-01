@@ -1,0 +1,63 @@
+[
+    {
+      "id": "sign-up-form",
+      "status": "CORRECT"
+    },
+    {
+      "id": "debounce",
+      "status": "INCORRECT"
+    },
+    {
+      "id": "blog-post",
+      "status": "CORRECT"
+    },
+    {
+      "id": "navbar",
+      "status": "PARTIALLY_CORRECT"
+    },
+    {
+      "id": "purchase-form",
+      "status": "PARTIALLY_CORRECT"
+    },
+    {
+      "id": "stopwatch",
+      "status": "INCORRECT"
+    },
+    {
+      "id": "testing-framework",
+      "status": "CORRECT"
+    },
+    {
+      "id": "algoexpert-products",
+      "status": "INCORRECT"
+    },
+    {
+      "id": "array-methods",
+      "status": "CORRECT"
+    },
+    {
+      "id": "infinite-scroll",
+      "status": "PARTIALLY_CORRECT"
+    },
+    {
+      "id": "tic-tac-toe",
+      "status": "CORRECT"
+    },
+    {
+      "id": "todo-list",
+      "status": "CORRECT"
+    },
+    {
+      "id": "item-cart",
+      "status": "INCORRECT"
+    },
+    {
+      "id": "rainbow-circles",
+      "status": "INCORRECT"
+    },
+    {
+      "id": "this-binding",
+      "status": "CORRECT"
+    }
+  ]
+  

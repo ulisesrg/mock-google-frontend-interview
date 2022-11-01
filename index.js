@@ -1,9 +1,8 @@
 const wrapperElement = document.getElementById('wrapper');
 
 /* 
-Get the data
+Get the questions data
 */
-
 async function fetchQuestions() {
     const response = await fetch('./questions.json');
     const questions = await response.json();
@@ -11,8 +10,33 @@ async function fetchQuestions() {
 }
 
 /* 
-Build a data model
+Get the questions status
+*/
+async function fetchQuestionsStatus() {
+    const response = await fetch('./question-status.json');
+    const questionsStatus = await response.json();
+    return questionsStatus;
+}
 
+/* 
+Build questionStatusModel
+*/
+function buildQuestionStatusModel(questions) {
+    const questionStatusModel = {};
+
+    questions.forEach((question) => {
+        let status = question.status?.toLowerCase()?.replace('_', '-');
+
+        questionStatusModel[question.id] = status;
+    })
+
+    return questionStatusModel;
+}
+
+/* 
+Build a data model
+*/
+/*
 questions = [
     {
         id: 'asdf',
@@ -36,17 +60,21 @@ const questionsModel = {
     ],
 }
 */
-function buildCategoriesModel(questions) {
+function buildCategoriesModel(questions, questionsStatusModel) {
     const categoriesModel = {};
 
     questions.forEach(question => {
+        // Add status data for question
+        question.status = questionsStatusModel[question.id] || 'unattempted';
+
+        // Assign to category
         if (categoriesModel.hasOwnProperty(question.category)) {
             categoriesModel[question.category].push(question);
         } else {
-            categoriesModel[question.category] = [];
+            categoriesModel[question.category] = [question];
         }
     });
-
+    console.log(categoriesModel)
     return categoriesModel;
 }
 
@@ -56,6 +84,7 @@ function buildCategoriesModel(questions) {
 <div class="category">
     <h2>HTML</h2>
     <div class="question">
+        <div class="status partially-correct"></div>
         <h3>Stopwatch</h3>
     </div>
     <div class="question">
@@ -77,6 +106,11 @@ function createCategory(categoryName, questions) {
     questions.forEach((question) => {
         const questionElement = document.createElement('div');
         questionElement.classList.add('question');
+        
+        const statusElement = document.createElement('div');
+        statusElement.classList.add('status');
+        statusElement.classList.add(question.status);
+        questionElement.append(statusElement);
 
         const h3Element = document.createElement('h3');
         h3Element.textContent = question.name;
@@ -101,11 +135,13 @@ function displayCategories(categoriesModel) {
 
 
 /* 
-Iterate through model to output the desired markup
+Fetch and display questions by category
 */
 async function fetchAndDisplayQuestions() {
     const questions = await fetchQuestions();
-    const categoriesModel = buildCategoriesModel(questions);
+    const questionsStatus = await fetchQuestionsStatus();
+    const questionsStatusModel = buildQuestionStatusModel(questionsStatus);
+    const categoriesModel = buildCategoriesModel(questions, questionsStatusModel);
     displayCategories(categoriesModel);
 }
 
