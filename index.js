@@ -6,7 +6,12 @@ Get the questions data
 async function fetchQuestions() {
     const response = await fetch('./questions.json');
     const questions = await response.json();
-    return questions;
+    const delayedResult = new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(questions);
+        }, 2000);
+    })
+    return delayedResult;
 }
 
 /* 
@@ -15,7 +20,12 @@ Get the questions status
 async function fetchQuestionsStatus() {
     const response = await fetch('./question-status.json');
     const questionsStatus = await response.json();
-    return questionsStatus;
+    const delayedResult = new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(questionsStatus);
+        }, 2000);
+    })
+    return delayedResult;
 }
 
 /* 
@@ -74,7 +84,6 @@ function buildCategoriesModel(questions, questionsStatusModel) {
             categoriesModel[question.category] = [question];
         }
     });
-    console.log(categoriesModel)
     return categoriesModel;
 }
 
@@ -146,8 +155,13 @@ function displayCategories(categoriesModel) {
 Fetch and display questions by category
 */
 async function fetchAndDisplayQuestions() {
-    const questions = await fetchQuestions();
-    const questionsStatus = await fetchQuestionsStatus();
+    // const questions = await fetchQuestions();
+    // const questionsStatus = await fetchQuestionsStatus();
+    const [questions, questionsStatus] = await Promise.all([
+        fetchQuestions(),
+        fetchQuestionsStatus()
+    ]);
+
     const questionsStatusModel = buildQuestionStatusModel(questionsStatus);
     const categoriesModel = buildCategoriesModel(questions, questionsStatusModel);
     displayCategories(categoriesModel);
